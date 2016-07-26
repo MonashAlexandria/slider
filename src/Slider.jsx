@@ -125,27 +125,24 @@ class Slider extends React.Component {
         this.onMove(e, position);
     }
 
+    xor(vertical, inverted, response) {
+        return (vertical+inverted === 1) ? -response : response;
+    }
+
     getPositionDifference(difference) {
         const {vertical, inverted} = this.props;
 
+        /**
+         * This is ideally an XOR of vertical and inverted,
+         * condition when vertical and inverted are same i.e. true or false,
+         * it is a normal condition.
+         * Such as:
+         * if vertical = false and invert = false, is equal to normal horizontal slider
+         * if vertical = true and invert = false, is equal vertical slider buttom up where we want to negate the result.
+         */
+        return (vertical === inverted) ? difference : -difference;
 
-        if(vertical === false && inverted === false) {
-            return difference;
-        }
 
-        if(vertical === false && inverted === true) {
-            return -difference;
-        }
-
-        if(vertical && inverted) {
-            return difference;
-        }
-
-        if(vertical && inverted === false) {
-            return -difference;
-        }
-
-        return difference;
     }
 
     onMove(e, position) {

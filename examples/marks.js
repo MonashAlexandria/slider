@@ -4,7 +4,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider');
 
-const style = {width: 400, margin: 50};
+const style = { width: 400, margin: 50 };
 const marks = {
   '-10': '-10°C',
   0: <strong>0°C</strong>,
@@ -51,5 +51,4 @@ ReactDOM.render(
       <p>Range with marks and steps</p>
       <Slider min={-10} range marks={marks} step={10} onChange={log} defaultValue={[20, 40]} />
     </div>
-  </div>
-  , document.getElementById('__react-content'));
+  </div>, document.getElementById('__react-content'));

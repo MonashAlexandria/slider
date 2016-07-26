@@ -5,58 +5,64 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider');
 
-const style = {width: 400, margin: 50};
+const style = { width: 400, margin: 50 };
 
 function log(value) {
   console.log(value);
 }
-
 
 function percentFormatter(v) {
   return v + ' %';
 }
 
 const CustomizedSlider = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       value: 50,
     };
   },
-  onSliderChange: function(value) {
+
+  onSliderChange: function (value) {
     log(value);
     this.setState({
       value: value,
     });
   },
-  onAfterChange: function(value) {
+
+  onAfterChange: function (value) {
     console.log(value);
   },
-  render: function() {
+
+  render: function () {
     return <Slider value={this.state.value} onChange={this.onSliderChange} onAfterChange={this.onAfterChange} />;
   },
 });
 
 const DynamicBounds = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       min: 0,
       max: 100,
     };
   },
-  onSliderChange: function(value) {
+
+  onSliderChange: function (value) {
     log(value);
   },
-  onMinChange: function(e) {
+
+  onMinChange: function (e) {
     this.setState({
       min: +e.target.value || 0,
     });
   },
-  onMaxChange: function(e) {
+
+  onMaxChange: function (e) {
     this.setState({
       max: +e.target.value || 100,
     });
   },
-  render: function() {
+
+  render: function () {
     return (
       <div>
         <label>Min: </label>
@@ -105,5 +111,4 @@ ReactDOM.render(
       <p>Slider with dynamic `min` `max`</p>
       <DynamicBounds />
     </div>
-  </div>
-  , document.getElementById('__react-content'));
+  </div>, document.getElementById('__react-content'));

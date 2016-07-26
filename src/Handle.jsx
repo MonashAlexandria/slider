@@ -5,6 +5,8 @@ export default class Handle extends React.Component {
   constructor(props) {
     super(props);
 
+    this.getStyleProperty = this.getStyleProperty.bind(this);
+
     this.state = {
       isTooltipVisible: false,
     };
@@ -22,6 +24,19 @@ export default class Handle extends React.Component {
     });
   }
 
+  getStyleProperty(vertical, inverted, offset) {
+    let property = vertical ? {bottom : offset + '%'} : {left: offset + '%'};
+    if (vertical && inverted) {
+      property = {top: offset + '%'}
+    }
+
+    if(vertical === false && inverted === true ) {
+      property = {right: offset + '%'}
+    }
+
+    return property;
+  }
+
   render() {
     const {
       prefixCls,
@@ -33,9 +48,10 @@ export default class Handle extends React.Component {
       value,
       dragging,
       noTip,
+      inverted
     } = this.props;
 
-    const style = vertical ? { bottom: offset + '%' } : { left: offset + '%' };
+    let style = this.getStyleProperty(vertical, inverted, offset);
     const handle = (
       <div className={className} style={style}
         onMouseUp={this.showTooltip.bind(this)}
@@ -74,4 +90,5 @@ Handle.propTypes = {
   value: React.PropTypes.number,
   dragging: React.PropTypes.bool,
   noTip: React.PropTypes.bool,
+  inverted: React.PropTypes.bool
 };

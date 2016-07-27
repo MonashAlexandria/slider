@@ -115,6 +115,12 @@ ReactDOM.render(<Rcslider />, container);
           <td>When `range` is `true`, `allowCross` could be set as `true` to allow those two handles cross.</td>
         </tr>
         <tr>
+          <td>inverted</td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>If inverted is `true`, the slider will be inverted/reverse.</td>
+        </tr>
+        <tr>
           <td>vertical</td>
           <td>boolean</td>
           <td>false</td>

@@ -1,0 +1,5 @@
+{
+  "excludeFiles": [
+    "./examples/v-slider.js"
+  ]
+}

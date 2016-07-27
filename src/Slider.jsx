@@ -30,7 +30,7 @@ class Slider extends React.Component {
   constructor(props) {
     super(props);
 
-    const {range, min, max} = props;
+    const { range, min, max } = props;
     const initialValue = range ? [min, min] : min;
     const defaultValue = ('defaultValue' in props ? props.defaultValue : initialValue);
     const value = (props.value !== undefined ? props.value : defaultValue);
@@ -52,18 +52,21 @@ class Slider extends React.Component {
     }
 
     this.state = {
-      handle: null,
-      recent: recent,
-      upperBound: upperBound,
-      // If Slider is not range, set `lowerBound` equal to `min`.
-      lowerBound: (lowerBound || min),
-    };
+        handle: null,
+        recent: recent,
+        upperBound: upperBound,
+        // If Slider is not range, set `lowerBound` equal to `min`.
+        lowerBound: (lowerBound || min),
+      };
+
+    this.getSliderStart = this.getSliderStart.bind(this);
+    this.getPositionDifference = this.getPositionDifference.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (!('value' in nextProps || 'min' in nextProps || 'max' in nextProps)) return;
 
-    const {lowerBound, upperBound} = this.state;
+    const { lowerBound, upperBound } = this.state;
     if (nextProps.range) {
       const value = nextProps.value || [lowerBound, upperBound];
       const nextUpperBound = this.trimAlignValue(value[1], nextProps);
@@ -71,11 +74,11 @@ class Slider extends React.Component {
       if (nextLowerBound === lowerBound && nextUpperBound === upperBound) return;
 
       this.setState({
-        upperBound: nextUpperBound,
-        lowerBound: nextLowerBound,
-      });
+          upperBound: nextUpperBound,
+          lowerBound: nextLowerBound,
+        });
       if (this.isValueOutOfBounds(upperBound, nextProps) ||
-        this.isValueOutOfBounds(lowerBound, nextProps)) {
+          this.isValueOutOfBounds(lowerBound, nextProps)) {
         this.props.onChange([nextLowerBound, nextUpperBound]);
       }
     } else {
@@ -84,9 +87,9 @@ class Slider extends React.Component {
       if (nextValue === upperBound && lowerBound === nextProps.min) return;
 
       this.setState({
-        upperBound: nextValue,
-        lowerBound: nextProps.min,
-      });
+          upperBound: nextValue,
+          lowerBound: nextProps.min,
+        });
       if (this.isValueOutOfBounds(upperBound, nextProps)) {
         this.props.onChange(nextValue);
       }
@@ -99,10 +102,10 @@ class Slider extends React.Component {
     if (isNotControlled) {
       this.setState(state);
     } else if (state.handle) {
-      this.setState({handle: state.handle});
+      this.setState({ handle: state.handle });
     }
 
-    const data = {...this.state, ...state};
+    const data = { ...this.state, ...state };
     const changedValue = props.range ? [data.lowerBound, data.upperBound] : data.upperBound;
     props.onChange(changedValue);
   }
@@ -122,39 +125,59 @@ class Slider extends React.Component {
     this.onMove(e, position);
   }
 
+  xor(vertical, inverted, response) {
+    return (vertical + inverted === 1) ? -response : response;
+  }
+
+  getPositionDifference(difference) {
+    const { vertical, inverted } = this.props;
+
+    /**
+     * This is ideally an XOR of vertical and inverted,
+     * condition when vertical and inverted are same i.e. true or false,
+     * it is a normal condition.
+     * Such as:
+     * if vertical = false and invert = false, is equal to normal horizontal slider
+     * if vertical = true and invert = false, is equal vertical slider buttom up where we want to negate the result.
+     */
+    return (vertical === inverted) ? difference : -difference;
+
+  }
+
   onMove(e, position) {
     pauseEvent(e);
     const props = this.props;
     const state = this.state;
 
-    let diffPosition = position - this.startPosition;
-    diffPosition = this.props.vertical ? -diffPosition : diffPosition;
+    let diffPosition = this.getPositionDifference(position - this.startPosition);
     const diffValue = diffPosition / this.getSliderLength() * (props.max - props.min);
 
     const value = this.trimAlignValue(this.startValue + diffValue);
     const oldValue = state[state.handle];
+
     if (value === oldValue) return;
 
     if (props.allowCross && value < state.lowerBound && state.handle === 'upperBound') {
       this.onChange({
-        handle: 'lowerBound',
-        lowerBound: value,
-        upperBound: this.state.lowerBound,
-      });
+          handle: 'lowerBound',
+          lowerBound: value,
+          upperBound: this.state.lowerBound,
+        });
       return;
     }
+
     if (props.allowCross && value > state.upperBound && state.handle === 'lowerBound') {
       this.onChange({
-        handle: 'upperBound',
-        upperBound: value,
-        lowerBound: this.state.upperBound,
-      });
+          handle: 'upperBound',
+          upperBound: value,
+          lowerBound: this.state.upperBound,
+        });
       return;
     }
 
     this.onChange({
-      [state.handle]: value,
-    });
+        [state.handle]: value,
+      });
   }
 
   onTouchStart(e) {
@@ -167,7 +190,10 @@ class Slider extends React.Component {
   }
 
   onMouseDown(e) {
-    if (e.button !== 0) { return; }
+    if (e.button !== 0) {
+      return;
+    }
+
     const position = getMousePosition(this.props.vertical, e);
     this.onStart(position);
     this.addDocumentEvents('mouse');
@@ -183,7 +209,7 @@ class Slider extends React.Component {
     this.startPosition = position;
 
     const state = this.state;
-    const {upperBound, lowerBound} = state;
+    const { upperBound, lowerBound } = state;
 
     let valueNeedChanging = 'upperBound';
     if (this.props.range) {
@@ -203,20 +229,20 @@ class Slider extends React.Component {
     }
 
     this.setState({
-      handle: valueNeedChanging,
-      recent: valueNeedChanging,
-    });
+        handle: valueNeedChanging,
+        recent: valueNeedChanging,
+      });
 
     const oldValue = state[valueNeedChanging];
     if (value === oldValue) return;
 
     this.onChange({
-      [valueNeedChanging]: value,
-    });
+        [valueNeedChanging]: value,
+      });
   }
 
   getValue() {
-    const {lowerBound, upperBound} = this.state;
+    const { lowerBound, upperBound } = this.state;
     return this.props.range ? [lowerBound, upperBound] : upperBound;
   }
 
@@ -232,8 +258,19 @@ class Slider extends React.Component {
   getSliderStart() {
     const slider = this.refs.slider;
     const rect = slider.getBoundingClientRect();
+    const { vertical, inverted } = this.props;
+    let startValue = 0;
+    if (vertical && inverted) {
+      startValue = rect.bottom;
+    } else if (vertical && inverted === false) {
+      startValue = rect.top;
+    } else if (vertical === false && inverted) {
+      startValue = rect.right;
+    } else if (vertical === false && inverted === false) {
+      startValue = rect.left;
+    }
 
-    return this.props.vertical ? rect.top : rect.left;
+    return startValue;
   }
 
   getPrecision(step) {
@@ -242,6 +279,7 @@ class Slider extends React.Component {
     if (stepString.indexOf('.') >= 0) {
       precision = stepString.length - stepString.indexOf('.') - 1;
     }
+
     return precision;
   }
 
@@ -251,19 +289,22 @@ class Slider extends React.Component {
 
   trimAlignValue(v, nextProps) {
     const state = this.state || {};
-    const {handle, lowerBound, upperBound} = state;
-    const {marks, step, min, max, allowCross} = {...this.props, ...(nextProps || {})};
+    const { handle, lowerBound, upperBound } = state;
+    const { marks, step, min, max, allowCross } = { ...this.props, ...(nextProps || {}) };
 
     let val = v;
     if (val <= min) {
       val = min;
     }
+
     if (val >= max) {
       val = max;
     }
+
     if (!allowCross && handle === 'upperBound' && val <= lowerBound) {
       val = lowerBound;
     }
+
     if (!allowCross && handle === 'lowerBound' && val >= upperBound) {
       val = upperBound;
     }
@@ -281,13 +322,13 @@ class Slider extends React.Component {
   }
 
   calcOffset(value) {
-    const {min, max} = this.props;
+    const { min, max } = this.props;
     const ratio = (value - min) / (max - min);
     return ratio * 100;
   }
 
   calcValue(offset) {
-    const {vertical, min, max} = this.props;
+    const { vertical, min, max } = this.props;
     const ratio = Math.abs(offset / this.getSliderLength());
     const value = vertical ? (1 - ratio) * (max - min) + min : ratio * (max - min) + min;
     return value;
@@ -323,29 +364,30 @@ class Slider extends React.Component {
   end(type) {
     this.removeEvents(type);
     this.props.onAfterChange(this.getValue());
-    this.setState({handle: null});
+    this.setState({ handle: null });
   }
 
   render() {
     const {
-      handle,
-      upperBound,
-      lowerBound,
+        handle,
+        upperBound,
+        lowerBound,
     } = this.state;
     const {
-      className,
-      prefixCls,
-      disabled,
-      vertical,
-      dots,
-      included,
-      range,
-      step,
-      marks,
-      max, min,
-      tipTransitionName,
-      tipFormatter,
-      children,
+        className,
+        prefixCls,
+        disabled,
+        vertical,
+        dots,
+        included,
+        range,
+        step,
+        marks,
+        max, min,
+        tipTransitionName,
+        tipFormatter,
+        children,
+        inverted,
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -356,121 +398,129 @@ class Slider extends React.Component {
     const handleClassName = prefixCls + '-handle';
 
     const upperClassName = classNames({
-      [handleClassName]: true,
-      [handleClassName + '-upper']: true,
-    });
+        [handleClassName]: true,
+        [handleClassName + '-upper']: true,
+      });
 
     const lowerClassName = classNames({
-      [handleClassName]: true,
-      [handleClassName + '-lower']: true,
-    });
+        [handleClassName]: true,
+        [handleClassName + '-lower']: true,
+      });
 
     const isNoTip = (step === null) || (tipFormatter === null);
 
     const commonHandleProps = {
-      prefixCls,
-      noTip: isNoTip,
-      tipTransitionName,
-      tipFormatter,
-      vertical,
-    };
+        prefixCls,
+        noTip: isNoTip,
+        tipTransitionName,
+        tipFormatter,
+        vertical,
+        inverted,
+      };
 
     const upper = cloneElement(customHandle, {
-      ...commonHandleProps,
-      className: upperClassName,
-      value: upperBound,
-      offset: upperOffset,
-      dragging: handle === 'upperBound',
-    });
+        ...commonHandleProps,
+        className: upperClassName,
+        value: upperBound,
+        offset: upperOffset,
+        dragging: handle === 'upperBound',
+      });
 
     let lower = null;
     if (range) {
       lower = cloneElement(customHandle, {
-        ...commonHandleProps,
-        className: lowerClassName,
-        value: lowerBound,
-        offset: lowerOffset,
-        dragging: handle === 'lowerBound',
-      });
+          ...commonHandleProps,
+          className: lowerClassName,
+          value: lowerBound,
+          offset: lowerOffset,
+          dragging: handle === 'lowerBound',
+        });
     }
 
     const sliderClassName = classNames({
-      [prefixCls]: true,
-      [prefixCls + '-disabled']: disabled,
-      [className]: !!className,
-      [prefixCls + '-vertical']: this.props.vertical,
-    });
+        [prefixCls]: true,
+        [prefixCls + '-disabled']: disabled,
+        [className]: !!className,
+        [prefixCls + '-vertical']: this.props.vertical,
+        [prefixCls + '-inverted']: this.props.inverted,
+      });
     const isIncluded = included || range;
     return (
-      <div ref="slider" className={sliderClassName}
-        onTouchStart={disabled ? noop : this.onTouchStart.bind(this)}
-        onMouseDown={disabled ? noop : this.onMouseDown.bind(this)}
-      >
-        {upper}
-        {lower}
-        <Track className={prefixCls + '-track'} vertical = {vertical} included={isIncluded}
-          offset={lowerOffset} length={upperOffset - lowerOffset} />
-        <Steps prefixCls={prefixCls} vertical = {vertical} marks={marks} dots={dots} step={step}
-          included={isIncluded} lowerBound={lowerBound}
-          upperBound={upperBound} max={max} min={min} />
-        <Marks className={prefixCls + '-mark'} vertical = {vertical} marks={marks}
-          included={isIncluded} lowerBound={lowerBound}
-          upperBound={upperBound} max={max} min={min} />
-        {children}
-      </div>
+        <div ref="slider" className={sliderClassName}
+             onTouchStart={disabled ? noop : this.onTouchStart.bind(this)}
+             onMouseDown={disabled ? noop : this.onMouseDown.bind(this)}
+        >
+                {upper}
+                {lower}
+                <Track className={prefixCls + '-track'} vertical={vertical} included={isIncluded}
+                   offset={lowerOffset} length={upperOffset - lowerOffset} inverted={inverted}/>
+                <Steps prefixCls={prefixCls} vertical={vertical} marks={marks} dots={dots} step={step}
+                   included={isIncluded} lowerBound={lowerBound}
+                   upperBound={upperBound} max={max} min={min}
+                   inverted={inverted}
+            />
+                <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
+                   included={isIncluded} lowerBound={lowerBound}
+                   upperBound={upperBound} max={max} min={min}
+                   inverted={inverted}
+            />
+                {children}
+            </div>
     );
   }
 }
 
 Slider.propTypes = {
-  min: React.PropTypes.number,
-  max: React.PropTypes.number,
-  step: React.PropTypes.number,
-  defaultValue: React.PropTypes.oneOfType([
-    React.PropTypes.number,
-    React.PropTypes.arrayOf(React.PropTypes.number),
-  ]),
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.number,
-    React.PropTypes.arrayOf(React.PropTypes.number),
-  ]),
-  marks: React.PropTypes.object,
-  included: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  prefixCls: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  children: React.PropTypes.any,
-  onBeforeChange: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onAfterChange: React.PropTypes.func,
-  handle: React.PropTypes.element,
-  tipTransitionName: React.PropTypes.string,
-  tipFormatter: React.PropTypes.func,
-  dots: React.PropTypes.bool,
-  range: React.PropTypes.bool,
-  vertical: React.PropTypes.bool,
-  allowCross: React.PropTypes.bool,
-};
+    min: React.PropTypes.number,
+    max: React.PropTypes.number,
+    step: React.PropTypes.number,
+    defaultValue: React.PropTypes.oneOfType([
+        React.PropTypes.number,
+        React.PropTypes.arrayOf(React.PropTypes.number),
+    ]),
+    value: React.PropTypes.oneOfType([
+        React.PropTypes.number,
+        React.PropTypes.arrayOf(React.PropTypes.number),
+    ]),
+    marks: React.PropTypes.object,
+    included: React.PropTypes.bool,
+    className: React.PropTypes.string,
+    prefixCls: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    children: React.PropTypes.any,
+    onBeforeChange: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+    onAfterChange: React.PropTypes.func,
+    handle: React.PropTypes.element,
+    tipTransitionName: React.PropTypes.string,
+    tipFormatter: React.PropTypes.func,
+    dots: React.PropTypes.bool,
+    range: React.PropTypes.bool,
+    vertical: React.PropTypes.bool,
+    inverted: React.PropTypes.bool,
+    allowCross: React.PropTypes.bool,
+  };
 
 Slider.defaultProps = {
-  prefixCls: 'rc-slider',
-  className: '',
-  tipTransitionName: '',
-  min: 0,
-  max: 100,
-  step: 1,
-  marks: {},
-  handle: <DefaultHandle />,
-  onBeforeChange: noop,
-  onChange: noop,
-  onAfterChange: noop,
-  tipFormatter: value => value,
-  included: true,
-  disabled: false,
-  dots: false,
-  range: false,
-  vertical: false,
-  allowCross: true,
-};
+    prefixCls: 'rc-slider',
+    className: '',
+    tipTransitionName: '',
+    min: 0,
+    max: 100,
+    step: 1,
+    marks: {},
+    handle: <DefaultHandle />,
+    onBeforeChange: noop,
+    onChange: noop,
+    onAfterChange: noop,
+    tipFormatter: value => value,
+    included: true,
+    disabled: false,
+    dots: false,
+    range: false,
+    vertical: false,
+    allowCross: true,
+    inverted: false,
+  };
 
 export default Slider;

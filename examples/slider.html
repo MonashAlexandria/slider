@@ -271,58 +271,64 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">const</span> ReactDOM = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-dom'</span>);
 <span class="hljs-keyword">const</span> Slider = <span class="hljs-built_in">require</span>(<span class="hljs-string">'rc-slider'</span>);
 
-<span class="hljs-keyword">const</span> style = {width: <span class="hljs-number">400</span>, margin: <span class="hljs-number">50</span>};
+<span class="hljs-keyword">const</span> style = { width: <span class="hljs-number">400</span>, margin: <span class="hljs-number">50</span> };
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log</span><span class="hljs-params">(value)</span> </span>{
   <span class="hljs-built_in">console</span>.log(value);
 }
-
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">percentFormatter</span><span class="hljs-params">(v)</span> </span>{
   <span class="hljs-keyword">return</span> v + <span class="hljs-string">' %'</span>;
 }
 
 <span class="hljs-keyword">const</span> CustomizedSlider = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> {
       value: <span class="hljs-number">50</span>,
     };
   },
-  onSliderChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+
+  onSliderChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
     log(value);
     <span class="hljs-keyword">this</span>.setState({
       value: value,
     });
   },
-  onAfterChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+
+  onAfterChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
     <span class="hljs-built_in">console</span>.log(value);
   },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">Slider</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">{this.state.value}</span> <span class="hljs-attribute">onChange</span>=<span class="hljs-value">{this.onSliderChange}</span> <span class="hljs-attribute">onAfterChange</span>=<span class="hljs-value">{this.onAfterChange}</span> /&gt;</span>;</span>
   },
 });
 
 <span class="hljs-keyword">const</span> DynamicBounds = React.createClass({
-  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+  getInitialState: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> {
       min: <span class="hljs-number">0</span>,
       max: <span class="hljs-number">100</span>,
     };
   },
-  onSliderChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value)</span> </span>{
+
+  onSliderChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> </span>{
     log(value);
   },
-  onMinChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+
+  onMinChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">this</span>.setState({
       min: +e.target.value || <span class="hljs-number">0</span>,
     });
   },
-  onMaxChange: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
+
+  onMaxChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(e)</span> </span>{
     <span class="hljs-keyword">this</span>.setState({
       max: +e.target.value || <span class="hljs-number">100</span>,
     });
   },
-  render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+
+  render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">label</span>&gt;</span>Min: <span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
@@ -371,8 +377,7 @@ ReactDOM.render(
       <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Slider with dynamic `min` `max`<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-title">DynamicBounds</span> /&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  , document.getElementById('__react-content'));
+  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>, document.getElementById('__react-content'));
 </span></code></pre></div>
   </div>
   <a href="http://github.com/react-component/slider">

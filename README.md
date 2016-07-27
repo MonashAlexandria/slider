@@ -1,7 +1,7 @@
-# rc-slider
+# rc-slider-extended
 ---
 
-slider ui component for react
+### Forked from [rc-slider](http://github.com/react-component/slider)
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -45,16 +45,16 @@ slider ui component for react
 
 ## install
 
-[![rc-slider](https://nodei.co/npm/rc-slider.png)](https://npmjs.org/package/rc-slider)
+[![rc-slider-extended](https://nodei.co/npm/rc-slider-extended.png)](https://npmjs.org/package/rc-slider-extended)
 
 ## Usage
 
 ```js
-require('rc-slider/assets/index.css');
+require('rc-slider-extended/assets/index.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Rcslider = require('rc-slider');
+var Rcslider = require('rc-slider-extended');
 ReactDOM.render(<Rcslider />, container);
 ```
 

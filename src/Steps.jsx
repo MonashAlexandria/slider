@@ -38,22 +38,22 @@ const Steps = ({
     prefixCls, vertical, marks, dots, step, included,
     lowerBound, upperBound, max, min, inverted,
 }) => {
-    const range = max - min;
-    const elements = calcPoints(vertical, inverted, marks, dots, step, min, max).map((point) => {
-        const offset = Math.abs(point - min) / range * 100 + '%';
-        const style = getStyle(vertical, inverted, offset);
+  const range = max - min;
+  const elements = calcPoints(vertical, inverted, marks, dots, step, min, max).map((point) => {
+      const offset = Math.abs(point - min) / range * 100 + '%';
+      const style = getStyle(vertical, inverted, offset);
 
-        const isActived = (!included && point === upperBound) ||
+      const isActived = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);
-        const pointClassName = classNames({
-            [prefixCls + '-dot']: true,
-            [prefixCls + '-dot-active']: isActived,
-          });
+      const pointClassName = classNames({
+          [prefixCls + '-dot']: true,
+          [prefixCls + '-dot-active']: isActived,
+        });
 
-        return <span className={pointClassName} style={style} key={point}/>;
-      });
+      return <span className={pointClassName} style={style} key={point}/>;
+    });
 
-    return <div className={prefixCls + '-step'}>{elements}</div>;
-  };
+  return <div className={prefixCls + '-step'}>{elements}</div>;
+};
 
 export default Steps;

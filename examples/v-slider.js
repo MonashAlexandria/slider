@@ -49,13 +49,13 @@ const DynamicBounds = React.createClass({
 
   onMinChange: function (e) {
     this.setState({
-      min: +e.target.value || 0,
+      min: +e.target.value || 0
     });
   },
 
   onMaxChange: function (e) {
     this.setState({
-      max: +e.target.value || 100,
+      max: +e.target.value || 100
     });
   },
 

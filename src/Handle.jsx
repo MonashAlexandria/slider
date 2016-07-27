@@ -8,20 +8,20 @@ export default class Handle extends React.Component {
     this.getStyleProperty = this.getStyleProperty.bind(this);
 
     this.state = {
-        isTooltipVisible: false,
-      };
+      isTooltipVisible: false,
+    };
   }
 
   showTooltip() {
     this.setState({
-        isTooltipVisible: true,
-      });
+      isTooltipVisible: true,
+    });
   }
 
   hideTooltip() {
     this.setState({
-        isTooltipVisible: false,
-      });
+      isTooltipVisible: false,
+    });
   }
 
   getStyleProperty(vertical, inverted, offset) {
@@ -81,14 +81,14 @@ export default class Handle extends React.Component {
 }
 
 Handle.propTypes = {
-    prefixCls: React.PropTypes.string,
-    className: React.PropTypes.string,
-    vertical: React.PropTypes.bool,
-    offset: React.PropTypes.number,
-    tipTransitionName: React.PropTypes.string,
-    tipFormatter: React.PropTypes.func,
-    value: React.PropTypes.number,
-    dragging: React.PropTypes.bool,
-    noTip: React.PropTypes.bool,
-    inverted: React.PropTypes.bool,
-  };
+  prefixCls: React.PropTypes.string,
+  className: React.PropTypes.string,
+  vertical: React.PropTypes.bool,
+  offset: React.PropTypes.number,
+  tipTransitionName: React.PropTypes.string,
+  tipFormatter: React.PropTypes.func,
+  value: React.PropTypes.number,
+  dragging: React.PropTypes.bool,
+  noTip: React.PropTypes.bool,
+  inverted: React.PropTypes.bool,
+};

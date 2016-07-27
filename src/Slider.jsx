@@ -52,12 +52,12 @@ class Slider extends React.Component {
     }
 
     this.state = {
-        handle: null,
-        recent: recent,
-        upperBound: upperBound,
+      handle: null,
+      recent: recent,
+      upperBound: upperBound,
         // If Slider is not range, set `lowerBound` equal to `min`.
-        lowerBound: (lowerBound || min),
-      };
+      lowerBound: (lowerBound || min),
+    };
 
     this.getSliderStart = this.getSliderStart.bind(this);
     this.getPositionDifference = this.getPositionDifference.bind(this);
@@ -74,9 +74,9 @@ class Slider extends React.Component {
       if (nextLowerBound === lowerBound && nextUpperBound === upperBound) return;
 
       this.setState({
-          upperBound: nextUpperBound,
-          lowerBound: nextLowerBound,
-        });
+        upperBound: nextUpperBound,
+        lowerBound: nextLowerBound,
+      });
       if (this.isValueOutOfBounds(upperBound, nextProps) ||
           this.isValueOutOfBounds(lowerBound, nextProps)) {
         this.props.onChange([nextLowerBound, nextUpperBound]);
@@ -87,9 +87,9 @@ class Slider extends React.Component {
       if (nextValue === upperBound && lowerBound === nextProps.min) return;
 
       this.setState({
-          upperBound: nextValue,
-          lowerBound: nextProps.min,
-        });
+        upperBound: nextValue,
+        lowerBound: nextProps.min,
+      });
       if (this.isValueOutOfBounds(upperBound, nextProps)) {
         this.props.onChange(nextValue);
       }
@@ -159,25 +159,25 @@ class Slider extends React.Component {
 
     if (props.allowCross && value < state.lowerBound && state.handle === 'upperBound') {
       this.onChange({
-          handle: 'lowerBound',
-          lowerBound: value,
-          upperBound: this.state.lowerBound,
-        });
+        handle: 'lowerBound',
+        lowerBound: value,
+        upperBound: this.state.lowerBound,
+      });
       return;
     }
 
     if (props.allowCross && value > state.upperBound && state.handle === 'lowerBound') {
       this.onChange({
-          handle: 'upperBound',
-          upperBound: value,
-          lowerBound: this.state.upperBound,
-        });
+        handle: 'upperBound',
+        upperBound: value,
+        lowerBound: this.state.upperBound,
+      });
       return;
     }
 
     this.onChange({
-        [state.handle]: value,
-      });
+      [state.handle]: value,
+    });
   }
 
   onTouchStart(e) {
@@ -229,16 +229,16 @@ class Slider extends React.Component {
     }
 
     this.setState({
-        handle: valueNeedChanging,
-        recent: valueNeedChanging,
-      });
+      handle: valueNeedChanging,
+      recent: valueNeedChanging,
+    });
 
     const oldValue = state[valueNeedChanging];
     if (value === oldValue) return;
 
     this.onChange({
-        [valueNeedChanging]: value,
-      });
+      [valueNeedChanging]: value,
+    });
   }
 
   getValue() {
@@ -398,52 +398,52 @@ class Slider extends React.Component {
     const handleClassName = prefixCls + '-handle';
 
     const upperClassName = classNames({
-        [handleClassName]: true,
-        [handleClassName + '-upper']: true,
-      });
+      [handleClassName]: true,
+      [handleClassName + '-upper']: true,
+    });
 
     const lowerClassName = classNames({
-        [handleClassName]: true,
-        [handleClassName + '-lower']: true,
-      });
+      [handleClassName]: true,
+      [handleClassName + '-lower']: true,
+    });
 
     const isNoTip = (step === null) || (tipFormatter === null);
 
     const commonHandleProps = {
-        prefixCls,
-        noTip: isNoTip,
-        tipTransitionName,
-        tipFormatter,
-        vertical,
-        inverted,
-      };
+      prefixCls,
+      noTip: isNoTip,
+      tipTransitionName,
+      tipFormatter,
+      vertical,
+      inverted,
+    };
 
     const upper = cloneElement(customHandle, {
-        ...commonHandleProps,
-        className: upperClassName,
-        value: upperBound,
-        offset: upperOffset,
-        dragging: handle === 'upperBound',
-      });
+      ...commonHandleProps,
+      className: upperClassName,
+      value: upperBound,
+      offset: upperOffset,
+      dragging: handle === 'upperBound',
+    });
 
     let lower = null;
     if (range) {
       lower = cloneElement(customHandle, {
-          ...commonHandleProps,
-          className: lowerClassName,
-          value: lowerBound,
-          offset: lowerOffset,
-          dragging: handle === 'lowerBound',
-        });
+        ...commonHandleProps,
+        className: lowerClassName,
+        value: lowerBound,
+        offset: lowerOffset,
+        dragging: handle === 'lowerBound',
+      });
     }
 
     const sliderClassName = classNames({
-        [prefixCls]: true,
-        [prefixCls + '-disabled']: disabled,
-        [className]: !!className,
-        [prefixCls + '-vertical']: this.props.vertical,
-        [prefixCls + '-inverted']: this.props.inverted,
-      });
+      [prefixCls]: true,
+      [prefixCls + '-disabled']: disabled,
+      [className]: !!className,
+      [prefixCls + '-vertical']: this.props.vertical,
+      [prefixCls + '-inverted']: this.props.inverted,
+    });
     const isIncluded = included || range;
     return (
         <div ref="slider" className={sliderClassName}
@@ -471,56 +471,56 @@ class Slider extends React.Component {
 }
 
 Slider.propTypes = {
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
-    step: React.PropTypes.number,
-    defaultValue: React.PropTypes.oneOfType([
-        React.PropTypes.number,
-        React.PropTypes.arrayOf(React.PropTypes.number),
+  min: React.PropTypes.number,
+  max: React.PropTypes.number,
+  step: React.PropTypes.number,
+  defaultValue: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.arrayOf(React.PropTypes.number),
     ]),
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.number,
-        React.PropTypes.arrayOf(React.PropTypes.number),
+  value: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.arrayOf(React.PropTypes.number),
     ]),
-    marks: React.PropTypes.object,
-    included: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    prefixCls: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    children: React.PropTypes.any,
-    onBeforeChange: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onAfterChange: React.PropTypes.func,
-    handle: React.PropTypes.element,
-    tipTransitionName: React.PropTypes.string,
-    tipFormatter: React.PropTypes.func,
-    dots: React.PropTypes.bool,
-    range: React.PropTypes.bool,
-    vertical: React.PropTypes.bool,
-    inverted: React.PropTypes.bool,
-    allowCross: React.PropTypes.bool,
-  };
+  marks: React.PropTypes.object,
+  included: React.PropTypes.bool,
+  className: React.PropTypes.string,
+  prefixCls: React.PropTypes.string,
+  disabled: React.PropTypes.bool,
+  children: React.PropTypes.any,
+  onBeforeChange: React.PropTypes.func,
+  onChange: React.PropTypes.func,
+  onAfterChange: React.PropTypes.func,
+  handle: React.PropTypes.element,
+  tipTransitionName: React.PropTypes.string,
+  tipFormatter: React.PropTypes.func,
+  dots: React.PropTypes.bool,
+  range: React.PropTypes.bool,
+  vertical: React.PropTypes.bool,
+  inverted: React.PropTypes.bool,
+  allowCross: React.PropTypes.bool,
+};
 
 Slider.defaultProps = {
-    prefixCls: 'rc-slider',
-    className: '',
-    tipTransitionName: '',
-    min: 0,
-    max: 100,
-    step: 1,
-    marks: {},
-    handle: <DefaultHandle />,
-    onBeforeChange: noop,
-    onChange: noop,
-    onAfterChange: noop,
-    tipFormatter: value => value,
-    included: true,
-    disabled: false,
-    dots: false,
-    range: false,
-    vertical: false,
-    allowCross: true,
-    inverted: false,
-  };
+  prefixCls: 'rc-slider',
+  className: '',
+  tipTransitionName: '',
+  min: 0,
+  max: 100,
+  step: 1,
+  marks: {},
+  handle: <DefaultHandle />,
+  onBeforeChange: noop,
+  onChange: noop,
+  onAfterChange: noop,
+  tipFormatter: value => value,
+  included: true,
+  disabled: false,
+  dots: false,
+  range: false,
+  vertical: false,
+  allowCross: true,
+  inverted: false,
+};
 
 export default Slider;

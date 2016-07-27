@@ -18,15 +18,17 @@
     "url": "http://github.com/react-component/slider/issues"
   },
   "files": [
-    "assets",
-    "src"
+    "assets/*.css",
+    "lib"
   ],
   "licenses": "MIT",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "style": "./assets/index.css",
   "config": {
     "port": 8005
   },
   "scripts": {
+    "compile" : "rc-tools run compile",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-server",

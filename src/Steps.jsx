@@ -64,7 +64,7 @@ class Steps extends Component {
                 [prefixCls + '-dot-active']: isActived
             });
 
-            const tooltipTitle = tooltipData[point][tooltipName];
+            const tooltipTitle = (typeof tooltipName === "function") ? tooltipName(point) : tooltipData[point][tooltipName];
             const tooltipWidth = (tooltipTitle.length * 8) + 40;
             return (
                 <span className={pointClassName} style={style} key={point} onMouseEnter = {this.onMouseEnter}

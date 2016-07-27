@@ -388,6 +388,8 @@ class Slider extends React.Component {
         tipFormatter,
         children,
         inverted,
+        tooltipData,
+        tooltipName
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -458,6 +460,9 @@ class Slider extends React.Component {
                    included={isIncluded} lowerBound={lowerBound}
                    upperBound={upperBound} max={max} min={min}
                    inverted={inverted}
+                   tooltipData={tooltipData}
+                   tooltipName={tooltipName}
+                       
             />
                 <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
                    included={isIncluded} lowerBound={lowerBound}

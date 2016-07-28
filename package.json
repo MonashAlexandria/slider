@@ -17,8 +17,12 @@
   "bugs": {
     "url": "http://github.com/react-component/slider/issues"
   },
+  "files": [
+    "assets/*.css",
+    "lib"
+  ],
   "licenses": "MIT",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
   "style": "./assets/index.css",
   "config": {
     "port": 8005
@@ -44,6 +48,9 @@
     "react-addons-test-utils": "^15.2.1",
     "react-dom": "^15.2.1"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "classnames": "^2.2.5",
     "rc-tooltip": "^3.4.2",

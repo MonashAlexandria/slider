@@ -7,6 +7,7 @@ import Steps from './Steps';
 import Marks from './Marks';
 
 function noop() {
+    return null;
 }
 
 function isNotTouchEvent(e) {
@@ -388,6 +389,10 @@ class Slider extends React.Component {
         tipFormatter,
         children,
         inverted,
+        tooltipData,
+        tooltipName,
+        handleStepsHover,
+        stepToolTips
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -458,6 +463,11 @@ class Slider extends React.Component {
                    included={isIncluded} lowerBound={lowerBound}
                    upperBound={upperBound} max={max} min={min}
                    inverted={inverted}
+                   tooltipData={tooltipData}
+                   tooltipName={tooltipName}
+                   stepToolTips={stepToolTips}
+                   handleStepsHover={handleStepsHover}
+                       
             />
                 <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
                    included={isIncluded} lowerBound={lowerBound}
@@ -499,6 +509,8 @@ Slider.propTypes = {
     vertical: React.PropTypes.bool,
     inverted: React.PropTypes.bool,
     allowCross: React.PropTypes.bool,
+    handleStepsHover: React.PropTypes.func,
+    stepToolTips: React.PropTypes.func,
   };
 
 Slider.defaultProps = {
@@ -510,6 +522,8 @@ Slider.defaultProps = {
     step: 1,
     marks: {},
     handle: <DefaultHandle />,
+    stepToolTips: noop,
+    handleStepsHover: noop,
     onBeforeChange: noop,
     onChange: noop,
     onAfterChange: noop,

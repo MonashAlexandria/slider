@@ -1,9 +1,10 @@
 /* eslint react/no-multi-comp: 0 */
-require('rc-slider/assets/index.less');
+require('rc-slider-extended/assets/index.less');
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const Slider = require('rc-slider');
+const Slider = require('rc-slider-extended');
+
 const horizontalStyle = { width: 400, margin: 50 };
 const verticalStyle = { float: 'left', width: 200, height: 400, marginBottom: 160, marginLeft: 50 };
 const parentStyle = { overflow: 'hidden' };
@@ -49,7 +50,7 @@ ReactDOM.render(
             </div>
             <div style={verticalStyle}>
                 <p>Basic Slider，`step=20, dots`</p>
-                <Slider vertical inverted dots step={20} defaultValue={100} onAfterChange={log}/>
+                <Slider vertical inverted dots step={20} min={0} max={100} />
             </div>
             <div style={verticalStyle}>
                 <p>Basic Slider with `tipFormatter`</p>

@@ -509,7 +509,7 @@ Slider.propTypes = {
     vertical: React.PropTypes.bool,
     inverted: React.PropTypes.bool,
     allowCross: React.PropTypes.bool,
-    handleStepsHover: React.PropTypes.bool,
+    handleStepsHover: React.PropTypes.func,
     stepToolTips: React.PropTypes.func,
   };
 

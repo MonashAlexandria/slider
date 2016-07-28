@@ -12,12 +12,12 @@ class Steps extends Component {
 
     onMouseEnter(e) {
         this.setState({hover: true});
-        this.props.handleHover(e, true);
+        this.props.handleStepsHover(e, true);
     }
 
-    onMouseLeave() {
+    onMouseLeave(e) {
         this.setState({hover: false});
-        this.props.handleHover(e, false);
+        this.props.handleStepsHover(e, false);
     }
 
     getStyle(vertical, inverted, offset) {

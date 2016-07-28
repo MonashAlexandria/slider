@@ -6,16 +6,18 @@ class Steps extends Component {
     constructor(props) {
         super(props);
         this.state = {hover : false};
+        this.onMouseEnter = this.onMouseEnter.bind(this);
+        this.onMouseLeave = this.onMouseLeave.bind(this);
     }
 
-    onMouseEnter() {
+    onMouseEnter(e) {
         this.setState({hover: true});
-        this.props.handleHover(true);
+        this.props.handleHover(e, true);
     }
 
     onMouseLeave() {
         this.setState({hover: false});
-        this.props.handleHover(false);
+        this.props.handleHover(e, false);
     }
 
     getStyle(vertical, inverted, offset) {
@@ -67,8 +69,8 @@ class Steps extends Component {
             const tooltipTitle = (typeof tooltipName === "function") ? tooltipName(point) : tooltipData[point][tooltipName];
             const tooltipWidth = (tooltipTitle.length * 8) + 40;
             return (
-                <span className={pointClassName} style={style} key={point} onMouseEnter = {this.onMouseEnter}
-                  onMouseLeave = {this.onMouseLeave}>
+                <span className={pointClassName} style={style} key={point} onMouseEnter = {this.onMouseEnter.bind(this)}
+                  onMouseLeave = {this.onMouseLeave.bind(this)}>
                     <div style={{width: tooltipWidth}} className="rc-tooltip tooltip">
                         <div className="tool-content">{tooltipTitle}</div>
                     </div>

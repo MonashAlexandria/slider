@@ -389,7 +389,8 @@ class Slider extends React.Component {
         children,
         inverted,
         tooltipData,
-        tooltipName
+        tooltipName,
+        handleStepsHover
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -462,6 +463,7 @@ class Slider extends React.Component {
                    inverted={inverted}
                    tooltipData={tooltipData}
                    tooltipName={tooltipName}
+                   handleStepsHover={handleStepsHover}
                        
             />
                 <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
@@ -504,6 +506,7 @@ Slider.propTypes = {
     vertical: React.PropTypes.bool,
     inverted: React.PropTypes.bool,
     allowCross: React.PropTypes.bool,
+    handleStepsHover: React.PropTypes.bool,
   };
 
 Slider.defaultProps = {
@@ -515,6 +518,7 @@ Slider.defaultProps = {
     step: 1,
     marks: {},
     handle: <DefaultHandle />,
+    handleStepsHover: noop,
     onBeforeChange: noop,
     onChange: noop,
     onAfterChange: noop,

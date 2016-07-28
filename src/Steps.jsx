@@ -53,27 +53,24 @@ class Steps extends Component {
 
     render() {
         const {prefixCls, vertical, marks, dots, step, included,
-          lowerBound, upperBound, max, min, inverted, tooltipData, tooltipName} = this.props;
+          lowerBound, upperBound, max, min, inverted, stepToolTips} = this.props;
 
         const range = max - min;
         const elements = this.calcPoints(vertical, inverted, marks, dots, step, min, max).map((point) => {
             const offset = Math.abs(point - min) / range * 100 + '%';
             const style = this.getStyle(vertical, inverted, offset);
 
-            const isActived = (!included && point === upperBound) || (included && point <= upperBound && point >= lowerBound);
+            const isActivated = (!included && point === upperBound) || (included && point <= upperBound && point >= lowerBound);
             const pointClassName = classNames({
                 [prefixCls + '-dot']: true,
-                [prefixCls + '-dot-active']: isActived
+                [prefixCls + '-dot-active']: isActivated
             });
-
-            const tooltipTitle = (typeof tooltipName === "function") ? tooltipName(point) : tooltipData[point][tooltipName];
-            const tooltipWidth = (tooltipTitle.length * 8) + 40;
+            
+            const tooltip = (typeof stepToolTips === "function") ? stepToolTips(point): "";
             return (
                 <span className={pointClassName} style={style} key={point} onMouseEnter = {this.onMouseEnter.bind(this)}
                   onMouseLeave = {this.onMouseLeave.bind(this)}>
-                    <div style={{width: tooltipWidth}} className="rc-tooltip tooltip">
-                        <div className="tool-content">{tooltipTitle}</div>
-                    </div>
+                    {tooltip}
                 </span>
             );
         });

@@ -1,5 +1,5 @@
 /* eslint react/no-multi-comp: 0 */
-require('rc-slider-extended/assets/index.less');
+require('rc-slider/assets/index.less');
 
 const React = require('react');
 const ReactDOM = require('react-dom');

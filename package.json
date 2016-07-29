@@ -1,6 +1,6 @@
 {
   "name": "rc-slider",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "description": "slider ui component for react",
   "keywords": [
     "react",
@@ -23,10 +23,12 @@
   ],
   "licenses": "MIT",
   "main": "./lib/index.js",
+  "style": "./assets/index.css",
   "config": {
     "port": 8005
   },
   "scripts": {
+    "compile" : "rc-tools run compile",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",

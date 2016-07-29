@@ -7,6 +7,7 @@ import Steps from './Steps';
 import Marks from './Marks';
 
 function noop() {
+    return null;
 }
 
 function isNotTouchEvent(e) {
@@ -388,6 +389,10 @@ class Slider extends React.Component {
         tipFormatter,
         children,
         inverted,
+        tooltipData,
+        tooltipName,
+        handleStepsHover,
+        stepToolTips
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -458,6 +463,11 @@ class Slider extends React.Component {
                    included={isIncluded} lowerBound={lowerBound}
                    upperBound={upperBound} max={max} min={min}
                    inverted={inverted}
+                   tooltipData={tooltipData}
+                   tooltipName={tooltipName}
+                   stepToolTips={stepToolTips}
+                   handleStepsHover={handleStepsHover}
+                       
             />
                 <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
                    included={isIncluded} lowerBound={lowerBound}
@@ -482,45 +492,49 @@ Slider.propTypes = {
       React.PropTypes.number,
       React.PropTypes.arrayOf(React.PropTypes.number),
     ]),
-  marks: React.PropTypes.object,
-  included: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  prefixCls: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  children: React.PropTypes.any,
-  onBeforeChange: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onAfterChange: React.PropTypes.func,
-  handle: React.PropTypes.element,
-  tipTransitionName: React.PropTypes.string,
-  tipFormatter: React.PropTypes.func,
-  dots: React.PropTypes.bool,
-  range: React.PropTypes.bool,
-  vertical: React.PropTypes.bool,
-  inverted: React.PropTypes.bool,
-  allowCross: React.PropTypes.bool,
-};
+    marks: React.PropTypes.object,
+    included: React.PropTypes.bool,
+    className: React.PropTypes.string,
+    prefixCls: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    children: React.PropTypes.any,
+    onBeforeChange: React.PropTypes.func,
+    onChange: React.PropTypes.func,
+    onAfterChange: React.PropTypes.func,
+    handle: React.PropTypes.element,
+    tipTransitionName: React.PropTypes.string,
+    tipFormatter: React.PropTypes.func,
+    dots: React.PropTypes.bool,
+    range: React.PropTypes.bool,
+    vertical: React.PropTypes.bool,
+    inverted: React.PropTypes.bool,
+    allowCross: React.PropTypes.bool,
+    handleStepsHover: React.PropTypes.func,
+    stepToolTips: React.PropTypes.func,
+  };
 
 Slider.defaultProps = {
-  prefixCls: 'rc-slider',
-  className: '',
-  tipTransitionName: '',
-  min: 0,
-  max: 100,
-  step: 1,
-  marks: {},
-  handle: <DefaultHandle />,
-  onBeforeChange: noop,
-  onChange: noop,
-  onAfterChange: noop,
-  tipFormatter: value => value,
-  included: true,
-  disabled: false,
-  dots: false,
-  range: false,
-  vertical: false,
-  allowCross: true,
-  inverted: false,
-};
+    prefixCls: 'rc-slider',
+    className: '',
+    tipTransitionName: '',
+    min: 0,
+    max: 100,
+    step: 1,
+    marks: {},
+    handle: <DefaultHandle />,
+    stepToolTips: noop,
+    handleStepsHover: noop,
+    onBeforeChange: noop,
+    onChange: noop,
+    onAfterChange: noop,
+    tipFormatter: value => value,
+    included: true,
+    disabled: false,
+    dots: false,
+    range: false,
+    vertical: false,
+    allowCross: true,
+    inverted: false,
+  };
 
 export default Slider;

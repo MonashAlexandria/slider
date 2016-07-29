@@ -1,6 +1,15 @@
 import React from 'react';
 import classNames from 'classnames';
 
+// function getStyle(vertical, inverted) {
+//     let style = {};
+//
+//     if(vertical) {
+//         style.
+//     }
+//
+// }
+
 const Marks = ({ className, vertical, inverted, marks, included, upperBound, lowerBound, max, min }) => {
   const marksKeys = Object.keys(marks);
   const marksCount = marksKeys.length;

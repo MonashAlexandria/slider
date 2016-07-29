@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import warning from 'warning';
+import Tooltip from 'rc-tooltip';
 
 class Steps extends Component {
     constructor(props) {
@@ -68,10 +69,14 @@ class Steps extends Component {
             
             const tooltip = (typeof stepToolTips === "function") ? stepToolTips(point): "";
             return (
+            <Tooltip placement="top"
+                     overlay={<span>Tooltip example</span>}
+                     visible={this.state.hover}>
                 <span className={pointClassName} style={style} key={point} onMouseEnter = {this.onMouseEnter.bind(this)}
-                  onMouseLeave = {this.onMouseLeave.bind(this)}>
-                    {tooltip}
+                      onMouseLeave = {this.onMouseLeave.bind(this)}>
                 </span>
+            </Tooltip>
+
             );
         });
 

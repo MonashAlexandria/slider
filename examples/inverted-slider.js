@@ -17,6 +17,20 @@ function percentFormatter(v) {
   return v + ' %';
 }
 
+const marks = {
+    '-10': '-10°C',
+    0: <strong>0°C</strong>,
+    26: '26°C',
+    37: '37°C',
+    50: '50°C',
+    100: {
+        style: {
+            color: 'red',
+        },
+        label: <strong>100°C</strong>,
+    },
+};
+
 ReactDOM.render(
     <div>
         <div style={parentStyle}>
@@ -50,12 +64,42 @@ ReactDOM.render(
             </div>
             <div style={verticalStyle}>
                 <p>Basic Slider，`step=20, dots`</p>
-                <Slider vertical inverted dots step={20} min={0} max={100} />
+                <Slider
+                  vertical
+                  stepToolTips="tooltip text"
+                  inverted
+                  dots step={20} min={0} max={100} />
             </div>
             <div style={verticalStyle}>
                 <p>Basic Slider with `tipFormatter`</p>
                 <Slider vertical inverted tipFormatter={percentFormatter}
                         tipTransitionName="rc-slider-tooltip-zoom-down" onChange={log}/>
+            </div>
+        </div>
+        <div style={parentStyle}>
+            <div style={verticalStyle}>
+                <p>Slider with marks, `step=null`</p>
+                <Slider vertical inverted min={-10} marks={marks} step={null} onChange={log} defaultValue={20} />
+            </div>
+            <div style={verticalStyle}>
+                <p>Slider with marks and steps</p>
+                <Slider vertical inverted dots min={-10} marks={marks} step={10} onChange={log} defaultValue={20} />
+            </div>
+            <div style={verticalStyle}>
+                <p>Slider with marks, `included=false`</p>
+                <Slider vertical inverted min={-10} marks={marks} included={false} defaultValue={20} />
+            </div>
+            <div style={verticalStyle}>
+                <p>Slider with marks and steps, `included=false`</p>
+                <Slider vertical inverted min={-10} marks={marks} step={10} included={false} defaultValue={20} />
+            </div>
+            <div style={verticalStyle}>
+                <p>Range with marks</p>
+                <Slider vertical inverted min={-10} range marks={marks} onChange={log} defaultValue={[20, 40]} />
+            </div>
+            <div style={verticalStyle}>
+                <p>Range with marks and steps</p>
+                <Slider vertical inverted min={-10} range marks={marks} step={10} onChange={log} defaultValue={[20, 40]} />
             </div>
         </div>
     </div>, document.getElementById('__react-content'));

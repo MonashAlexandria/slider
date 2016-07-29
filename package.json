@@ -1,7 +1,7 @@
 {
-  "name": "rc-slider-extended",
-  "version": "3.8.4",
-  "description": "slider ui component for react supporting reversible",
+  "name": "rc-slider",
+  "version": "3.8.2",
+  "description": "slider ui component for react",
   "keywords": [
     "react",
     "react-component",

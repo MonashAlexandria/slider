@@ -1,42 +1,47 @@
 /* eslint react/no-multi-comp: 0 */
-require('rc-slider/assets/index.less');
+require('rc-slider-extended/assets/index.less');
 
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider');
 
-const style = {float: 'left', width: 180, height: 400, marginBottom: 160, marginLeft: 50};
-const parentStyle = {overflow: 'hidden'};
+const style = { float: 'left', width: 180, height: 400, marginBottom: 160, marginLeft: 50 };
+const parentStyle = { overflow: 'hidden' };
 
 function log(value) {
   console.log(value);
 }
 
 const CustomizedRange = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       lowerBound: 20,
       upperBound: 40,
       value: [20, 40],
     };
   },
-  onLowerBoundChange: function(e) {
+
+  onLowerBoundChange: function (e) {
     this.setState({ lowerBound: +e.target.value });
   },
-  onUpperBoundChange: function(e) {
+
+  onUpperBoundChange: function (e) {
     this.setState({ upperBound: +e.target.value });
   },
-  onSliderChange: function(value) {
+
+  onSliderChange: function (value) {
     log(value);
     this.setState({
       value: value,
     });
   },
-  handleApply: function() {
+
+  handleApply: function () {
     const { lowerBound, upperBound } = this.state;
-    this.setState({ value: [lowerBound, upperBound]});
+    this.setState({ value: [lowerBound, upperBound] });
   },
-  render: function() {
+
+  render: function () {
     return (
       <div style={style}>
         <Slider range vertical allowCross={false} value={this.state.value} onChange={this.onSliderChange} />
@@ -59,20 +64,24 @@ const DynamicBounds = React.createClass({
       max: 100,
     };
   },
-  onSliderChange: function(value) {
+
+  onSliderChange: function (value) {
     log(value);
   },
-  onMinChange: function(e) {
+
+  onMinChange: function (e) {
     this.setState({
       min: +e.target.value || 0,
     });
   },
-  onMaxChange: function(e) {
+
+  onMaxChange: function (e) {
     this.setState({
       max: +e.target.value || 100,
     });
   },
-  render: function() {
+
+  render: function () {
     return (
       <div style={style}>
         <Slider range vertical defaultValue={[20, 50]} min={this.state.min} max={this.state.max} onChange={this.onSliderChange} />
@@ -112,5 +121,4 @@ ReactDOM.render(
       <p>Range with dynamic `max` `min`</p>
       <DynamicBounds />
     </div>
-  </div>
-  , document.getElementById('__react-content'));
+  </div>, document.getElementById('__react-content'));

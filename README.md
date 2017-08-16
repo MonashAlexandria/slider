@@ -1,7 +1,7 @@
-# rc-slider
+# rc-slider-extended
 ---
 
-slider ui component for react
+### Forked from [rc-slider](http://github.com/react-component/slider)
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -45,16 +45,16 @@ slider ui component for react
 
 ## install
 
-[![rc-slider](https://nodei.co/npm/rc-slider.png)](https://npmjs.org/package/rc-slider)
+[![rc-slider-extended](https://nodei.co/npm/rc-slider-extended.png)](https://npmjs.org/package/rc-slider-extended)
 
 ## Usage
 
 ```js
-require('rc-slider/assets/index.css');
+require('rc-slider-extended/assets/index.css');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Rcslider = require('rc-slider');
+var Rcslider = require('rc-slider-extended');
 ReactDOM.render(<Rcslider />, container);
 ```
 
@@ -113,6 +113,12 @@ ReactDOM.render(<Rcslider />, container);
           <td>boolean</td>
           <td>true</td>
           <td>When `range` is `true`, `allowCross` could be set as `true` to allow those two handles cross.</td>
+        </tr>
+        <tr>
+          <td>inverted</td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>If inverted is `true`, the slider will be inverted/reverse.</td>
         </tr>
         <tr>
           <td>vertical</td>

@@ -1,7 +1,7 @@
 {
-  "name": "rc-slider",
-  "version": "3.8.2",
-  "description": "slider ui component for react",
+  "name": "rc-slider-extended",
+  "version": "3.8.4",
+  "description": "slider ui component for react supporting reversible",
   "keywords": [
     "react",
     "react-component",
@@ -28,6 +28,7 @@
     "port": 8005
   },
   "scripts": {
+    "compile" : "rc-tools run compile",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-server",

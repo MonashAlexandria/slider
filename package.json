@@ -28,7 +28,7 @@
     "port": 8005
   },
   "scripts": {
-    "compile" : "rc-tools run compile",
+    "compile": "rc-tools run compile",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-server",
@@ -44,15 +44,15 @@
     "pre-commit": "1.x",
     "rc-server": "3.x",
     "rc-tools": "4.x",
-    "react": "^15.2.1",
-    "react-addons-test-utils": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "pre-commit": [
     "lint"
   ],
   "dependencies": {
     "classnames": "^2.2.5",
+    "prop-types": "^15.6.2",
     "rc-tooltip": "^3.4.2",
     "rc-util": "^3.2.1",
     "warning": "^3.0.0"

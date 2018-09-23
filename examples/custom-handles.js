@@ -3,6 +3,7 @@ require('rc-slider-extended/assets/index.less');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider-extended');
+const PropTypes = require('prop-types');
 
 const wrapperStyle = { width: 400, margin: 50 };
 
@@ -27,8 +28,8 @@ const CustomHandle = props => {
 };
 
 CustomHandle.propTypes = {
-  value: React.PropTypes.any,
-  offset: React.PropTypes.number,
+  value: PropTypes.any,
+  offset: PropTypes.number,
 };
 
 ReactDOM.render(

@@ -4,6 +4,7 @@ require('rc-slider-extended/assets/index.less');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Slider = require('rc-slider-extended');
+const Component = require('react').Component;
 
 const style = { width: 400, margin: 50 };
 
@@ -11,36 +12,41 @@ function log(value) {
   console.log(value);
 }
 
-const CustomizedRange = React.createClass({
-  getInitialState: function () {
-    return {
+class CustomizedRange extends Component {
+  constructor(props) {
+    super(props);
+    this.onLowerBoundChange = this.onLowerBoundChange.bind(this);
+    this.onUpperBoundChange = this.onUpperBoundChange.bind(this);
+    this.onSliderChange = this.onSliderChange.bind(this);
+    this.handleApply = this.handleApply.bind(this);
+    this.state = {
       lowerBound: 20,
       upperBound: 40,
       value: [20, 40],
     };
-  },
+  }
 
-  onLowerBoundChange: function (e) {
+  onLowerBoundChange(e) {
     this.setState({ lowerBound: +e.target.value });
-  },
+  }
 
-  onUpperBoundChange: function (e) {
+  onUpperBoundChange(e) {
     this.setState({ upperBound: +e.target.value });
-  },
+  }
 
-  onSliderChange: function (value) {
+  onSliderChange(value) {
     log(value);
     this.setState({
       value: value,
     });
-  },
+  }
 
-  handleApply: function () {
+  handleApply() {
     const { lowerBound, upperBound } = this.state;
     this.setState({ value: [lowerBound, upperBound] });
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div>
         <label>LowerBound: </label>
@@ -54,34 +60,37 @@ const CustomizedRange = React.createClass({
         <Slider range allowCross={false} value={this.state.value} onChange={this.onSliderChange} />
       </div>
     );
-  },
-});
+  }
+}
 
-const DynamicBounds = React.createClass({
-  getInitialState() {
-    return {
+class DynamicBounds extends Component {
+  constructor(props) {
+    super(props);
+    this.onMinChange = this.onMinChange.bind(this);
+    this.onMaxChange = this.onMaxChange.bind(this);
+    this.state = {
       min: 0,
       max: 100,
     };
-  },
+  }
 
-  onSliderChange: function (value) {
+  onSliderChange(value) {
     log(value);
-  },
+  }
 
-  onMinChange: function (e) {
+  onMinChange(e) {
     this.setState({
       min: +e.target.value || 0,
     });
-  },
+  }
 
-  onMaxChange: function (e) {
+  onMaxChange(e) {
     this.setState({
       max: +e.target.value || 100,
     });
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div>
         <label>Min: </label>
@@ -93,8 +102,8 @@ const DynamicBounds = React.createClass({
         <Slider range defaultValue={[20, 50]} min={this.state.min} max={this.state.max} onChange={this.onSliderChange} />
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>

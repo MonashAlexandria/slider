@@ -1,7 +1,7 @@
 const expect = require('expect.js');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const ReactTestUtils = require('react-addons-test-utils');
+const ReactTestUtils = require('react-dom/test-utils');
 const Slider = require('..');
 
 require('../assets/index.less');

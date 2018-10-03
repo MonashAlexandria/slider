@@ -1,5 +1,6 @@
 import React from 'react';
 import Tooltip from 'rc-tooltip';
+import PropTypes from 'prop-types';
 
 export default class Handle extends React.Component {
   constructor(props) {
@@ -8,20 +9,8 @@ export default class Handle extends React.Component {
     this.getStyleProperty = this.getStyleProperty.bind(this);
 
     this.state = {
-        isTooltipVisible: false,
-      };
-  }
-
-  showTooltip() {
-    this.setState({
-        isTooltipVisible: true,
-      });
-  }
-
-  hideTooltip() {
-    this.setState({
-        isTooltipVisible: false,
-      });
+      isTooltipVisible: false,
+    };
   }
 
   getStyleProperty(vertical, inverted, offset) {
@@ -35,6 +24,18 @@ export default class Handle extends React.Component {
     }
 
     return property;
+  }
+
+  showTooltip() {
+    this.setState({
+      isTooltipVisible: true,
+    });
+  }
+
+  hideTooltip() {
+    this.setState({
+      isTooltipVisible: false,
+    });
   }
 
   render() {
@@ -51,7 +52,7 @@ export default class Handle extends React.Component {
         inverted,
     } = this.props;
 
-    let style = this.getStyleProperty(vertical, inverted, offset);
+    const style = this.getStyleProperty(vertical, inverted, offset);
     const handle = (
         <div className={className} style={style}
              onMouseUp={this.showTooltip.bind(this)}
@@ -81,14 +82,14 @@ export default class Handle extends React.Component {
 }
 
 Handle.propTypes = {
-    prefixCls: React.PropTypes.string,
-    className: React.PropTypes.string,
-    vertical: React.PropTypes.bool,
-    offset: React.PropTypes.number,
-    tipTransitionName: React.PropTypes.string,
-    tipFormatter: React.PropTypes.func,
-    value: React.PropTypes.number,
-    dragging: React.PropTypes.bool,
-    noTip: React.PropTypes.bool,
-    inverted: React.PropTypes.bool,
-  };
+  prefixCls: PropTypes.string,
+  className: PropTypes.string,
+  vertical: PropTypes.bool,
+  offset: PropTypes.number,
+  tipTransitionName: PropTypes.string,
+  tipFormatter: PropTypes.func,
+  value: PropTypes.number,
+  dragging: PropTypes.bool,
+  noTip: PropTypes.bool,
+  inverted: PropTypes.bool,
+};

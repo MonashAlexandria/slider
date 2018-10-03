@@ -3,7 +3,8 @@ require('rc-slider-extended/assets/index.less');
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const Slider = require('rc-slider');
+const Slider = require('rc-slider-extended');
+const Component = require('react').Component;
 
 const style = { width: 400, margin: 50 };
 
@@ -15,54 +16,59 @@ function percentFormatter(v) {
   return v + ' %';
 }
 
-const CustomizedSlider = React.createClass({
-  getInitialState: function () {
-    return {
+class CustomizedSlider extends Component {
+  constructor(props) {
+    super(props);
+    this.onSliderChange = this.onSliderChange.bind(this);
+    this.state = {
       value: 50,
     };
-  },
+  }
 
-  onSliderChange: function (value) {
+  onSliderChange(value) {
     log(value);
     this.setState({
       value: value,
     });
-  },
+  }
 
-  onAfterChange: function (value) {
+  onAfterChange(value) {
     console.log(value);
-  },
+  }
 
-  render: function () {
+  render() {
     return <Slider value={this.state.value} onChange={this.onSliderChange} onAfterChange={this.onAfterChange} />;
-  },
-});
+  }
+}
 
-const DynamicBounds = React.createClass({
-  getInitialState: function () {
-    return {
+class DynamicBounds extends Component {
+  constructor(props) {
+    super(props);
+    this.onMinChange = this.onMinChange.bind(this);
+    this.onMaxChange = this.onMaxChange.bind(this);
+    this.state = {
       min: 0,
       max: 100,
     };
-  },
+  }
 
-  onSliderChange: function (value) {
+  onSliderChange(value) {
     log(value);
-  },
+  }
 
-  onMinChange: function (e) {
+  onMinChange(e) {
     this.setState({
       min: +e.target.value || 0,
     });
-  },
+  }
 
-  onMaxChange: function (e) {
+  onMaxChange(e) {
     this.setState({
       max: +e.target.value || 100,
     });
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <div>
         <label>Min: </label>
@@ -74,8 +80,8 @@ const DynamicBounds = React.createClass({
         <Slider defaultValue={50} min={this.state.min} max={this.state.max} onChange={this.onSliderChange} />
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(
   <div>

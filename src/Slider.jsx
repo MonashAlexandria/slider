@@ -1,4 +1,5 @@
 import React, { cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
 import Track from './Track';
@@ -7,7 +8,7 @@ import Steps from './Steps';
 import Marks from './Marks';
 
 function noop() {
-    return null;
+  return null;
 }
 
 function isNotTouchEvent(e) {
@@ -53,12 +54,12 @@ class Slider extends React.Component {
     }
 
     this.state = {
-        handle: null,
-        recent: recent,
-        upperBound: upperBound,
-        // If Slider is not range, set `lowerBound` equal to `min`.
-        lowerBound: (lowerBound || min),
-      };
+      handle: null,
+      recent: recent,
+      upperBound: upperBound,
+      // If Slider is not range, set `lowerBound` equal to `min`.
+      lowerBound: (lowerBound || min),
+    };
 
     this.getSliderStart = this.getSliderStart.bind(this);
     this.getPositionDifference = this.getPositionDifference.bind(this);
@@ -75,9 +76,9 @@ class Slider extends React.Component {
       if (nextLowerBound === lowerBound && nextUpperBound === upperBound) return;
 
       this.setState({
-          upperBound: nextUpperBound,
-          lowerBound: nextLowerBound,
-        });
+        upperBound: nextUpperBound,
+        lowerBound: nextLowerBound,
+      });
       if (this.isValueOutOfBounds(upperBound, nextProps) ||
           this.isValueOutOfBounds(lowerBound, nextProps)) {
         this.props.onChange([nextLowerBound, nextUpperBound]);
@@ -88,9 +89,9 @@ class Slider extends React.Component {
       if (nextValue === upperBound && lowerBound === nextProps.min) return;
 
       this.setState({
-          upperBound: nextValue,
-          lowerBound: nextProps.min,
-        });
+        upperBound: nextValue,
+        lowerBound: nextProps.min,
+      });
       if (this.isValueOutOfBounds(upperBound, nextProps)) {
         this.props.onChange(nextValue);
       }
@@ -126,31 +127,12 @@ class Slider extends React.Component {
     this.onMove(e, position);
   }
 
-  xor(vertical, inverted, response) {
-    return (vertical + inverted === 1) ? -response : response;
-  }
-
-  getPositionDifference(difference) {
-    const { vertical, inverted } = this.props;
-
-    /**
-     * This is ideally an XOR of vertical and inverted,
-     * condition when vertical and inverted are same i.e. true or false,
-     * it is a normal condition.
-     * Such as:
-     * if vertical = false and invert = false, is equal to normal horizontal slider
-     * if vertical = true and invert = false, is equal vertical slider buttom up where we want to negate the result.
-     */
-    return (vertical === inverted) ? difference : -difference;
-
-  }
-
   onMove(e, position) {
     pauseEvent(e);
     const props = this.props;
     const state = this.state;
 
-    let diffPosition = this.getPositionDifference(position - this.startPosition);
+    const diffPosition = this.getPositionDifference(position - this.startPosition);
     const diffValue = diffPosition / this.getSliderLength() * (props.max - props.min);
 
     const value = this.trimAlignValue(this.startValue + diffValue);
@@ -160,25 +142,25 @@ class Slider extends React.Component {
 
     if (props.allowCross && value < state.lowerBound && state.handle === 'upperBound') {
       this.onChange({
-          handle: 'lowerBound',
-          lowerBound: value,
-          upperBound: this.state.lowerBound,
-        });
+        handle: 'lowerBound',
+        lowerBound: value,
+        upperBound: this.state.lowerBound,
+      });
       return;
     }
 
     if (props.allowCross && value > state.upperBound && state.handle === 'lowerBound') {
       this.onChange({
-          handle: 'upperBound',
-          upperBound: value,
-          lowerBound: this.state.upperBound,
-        });
+        handle: 'upperBound',
+        upperBound: value,
+        lowerBound: this.state.upperBound,
+      });
       return;
     }
 
     this.onChange({
-        [state.handle]: value,
-      });
+      [state.handle]: value,
+    });
   }
 
   onTouchStart(e) {
@@ -230,16 +212,30 @@ class Slider extends React.Component {
     }
 
     this.setState({
-        handle: valueNeedChanging,
-        recent: valueNeedChanging,
-      });
+      handle: valueNeedChanging,
+      recent: valueNeedChanging,
+    });
 
     const oldValue = state[valueNeedChanging];
     if (value === oldValue) return;
 
     this.onChange({
-        [valueNeedChanging]: value,
-      });
+      [valueNeedChanging]: value,
+    });
+  }
+
+  getPositionDifference(difference) {
+    const { vertical, inverted } = this.props;
+
+    /**
+     * This is ideally an XOR of vertical and inverted,
+     * condition when vertical and inverted are same i.e. true or false,
+     * it is a normal condition.
+     * Such as:
+     * if vertical = false and invert = false, is equal to normal horizontal slider
+     * if vertical = true and invert = false, is equal vertical slider buttom up where we want to negate the result.
+     */
+    return (vertical === inverted) ? difference : -difference;
   }
 
   getValue() {
@@ -282,6 +278,10 @@ class Slider extends React.Component {
     }
 
     return precision;
+  }
+
+  xor(vertical, inverted, response) {
+    return (vertical + inverted === 1) ? -response : response;
   }
 
   isValueOutOfBounds(value, props) {
@@ -392,7 +392,7 @@ class Slider extends React.Component {
         tooltipData,
         tooltipName,
         handleStepsHover,
-        stepToolTips
+        stepToolTips,
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -403,52 +403,52 @@ class Slider extends React.Component {
     const handleClassName = prefixCls + '-handle';
 
     const upperClassName = classNames({
-        [handleClassName]: true,
-        [handleClassName + '-upper']: true,
-      });
+      [handleClassName]: true,
+      [handleClassName + '-upper']: true,
+    });
 
     const lowerClassName = classNames({
-        [handleClassName]: true,
-        [handleClassName + '-lower']: true,
-      });
+      [handleClassName]: true,
+      [handleClassName + '-lower']: true,
+    });
 
     const isNoTip = (step === null) || (tipFormatter === null);
 
     const commonHandleProps = {
-        prefixCls,
-        noTip: isNoTip,
-        tipTransitionName,
-        tipFormatter,
-        vertical,
-        inverted,
-      };
+      prefixCls,
+      noTip: isNoTip,
+      tipTransitionName,
+      tipFormatter,
+      vertical,
+      inverted,
+    };
 
     const upper = cloneElement(customHandle, {
-        ...commonHandleProps,
-        className: upperClassName,
-        value: upperBound,
-        offset: upperOffset,
-        dragging: handle === 'upperBound',
-      });
+      ...commonHandleProps,
+      className: upperClassName,
+      value: upperBound,
+      offset: upperOffset,
+      dragging: handle === 'upperBound',
+    });
 
     let lower = null;
     if (range) {
       lower = cloneElement(customHandle, {
-          ...commonHandleProps,
-          className: lowerClassName,
-          value: lowerBound,
-          offset: lowerOffset,
-          dragging: handle === 'lowerBound',
-        });
+        ...commonHandleProps,
+        className: lowerClassName,
+        value: lowerBound,
+        offset: lowerOffset,
+        dragging: handle === 'lowerBound',
+      });
     }
 
     const sliderClassName = classNames({
-        [prefixCls]: true,
-        [prefixCls + '-disabled']: disabled,
-        [className]: !!className,
-        [prefixCls + '-vertical']: this.props.vertical,
-        [prefixCls + '-inverted']: this.props.inverted,
-      });
+      [prefixCls]: true,
+      [prefixCls + '-disabled']: disabled,
+      [className]: !!className,
+      [prefixCls + '-vertical']: this.props.vertical,
+      [prefixCls + '-inverted']: this.props.inverted,
+    });
     const isIncluded = included || range;
     return (
         <div ref="slider" className={sliderClassName}
@@ -467,7 +467,6 @@ class Slider extends React.Component {
                    tooltipName={tooltipName}
                    stepToolTips={stepToolTips}
                    handleStepsHover={handleStepsHover}
-                       
             />
                 <Marks className={prefixCls + '-mark'} vertical={vertical} marks={marks}
                    included={isIncluded} lowerBound={lowerBound}
@@ -481,60 +480,62 @@ class Slider extends React.Component {
 }
 
 Slider.propTypes = {
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
-    step: React.PropTypes.number,
-    defaultValue: React.PropTypes.oneOfType([
-        React.PropTypes.number,
-        React.PropTypes.arrayOf(React.PropTypes.number),
-    ]),
-    value: React.PropTypes.oneOfType([
-        React.PropTypes.number,
-        React.PropTypes.arrayOf(React.PropTypes.number),
-    ]),
-    marks: React.PropTypes.object,
-    included: React.PropTypes.bool,
-    className: React.PropTypes.string,
-    prefixCls: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    children: React.PropTypes.any,
-    onBeforeChange: React.PropTypes.func,
-    onChange: React.PropTypes.func,
-    onAfterChange: React.PropTypes.func,
-    handle: React.PropTypes.element,
-    tipTransitionName: React.PropTypes.string,
-    tipFormatter: React.PropTypes.func,
-    dots: React.PropTypes.bool,
-    range: React.PropTypes.bool,
-    vertical: React.PropTypes.bool,
-    inverted: React.PropTypes.bool,
-    allowCross: React.PropTypes.bool,
-    handleStepsHover: React.PropTypes.func,
-    stepToolTips: React.PropTypes.func,
-  };
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.number),
+  ]),
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.number),
+  ]),
+  marks: PropTypes.object,
+  included: PropTypes.bool,
+  className: PropTypes.string,
+  prefixCls: PropTypes.string,
+  disabled: PropTypes.bool,
+  children: PropTypes.any,
+  onBeforeChange: PropTypes.func,
+  onChange: PropTypes.func,
+  onAfterChange: PropTypes.func,
+  handle: PropTypes.element,
+  tipTransitionName: PropTypes.string,
+  tipFormatter: PropTypes.func,
+  dots: PropTypes.bool,
+  range: PropTypes.bool,
+  vertical: PropTypes.bool,
+  inverted: PropTypes.bool,
+  allowCross: PropTypes.bool,
+  handleStepsHover: PropTypes.func,
+  stepToolTips: PropTypes.func,
+  tooltipData: PropTypes.object,
+  tooltipName: PropTypes.string,
+};
 
 Slider.defaultProps = {
-    prefixCls: 'rc-slider',
-    className: '',
-    tipTransitionName: '',
-    min: 0,
-    max: 100,
-    step: 1,
-    marks: {},
-    handle: <DefaultHandle />,
-    stepToolTips: noop,
-    handleStepsHover: noop,
-    onBeforeChange: noop,
-    onChange: noop,
-    onAfterChange: noop,
-    tipFormatter: value => value,
-    included: true,
-    disabled: false,
-    dots: false,
-    range: false,
-    vertical: false,
-    allowCross: true,
-    inverted: false,
-  };
+  prefixCls: 'rc-slider',
+  className: '',
+  tipTransitionName: '',
+  min: 0,
+  max: 100,
+  step: 1,
+  marks: {},
+  handle: <DefaultHandle />,
+  stepToolTips: noop,
+  handleStepsHover: noop,
+  onBeforeChange: noop,
+  onChange: noop,
+  onAfterChange: noop,
+  tipFormatter: value => value,
+  included: true,
+  disabled: false,
+  dots: false,
+  range: false,
+  vertical: false,
+  allowCross: true,
+  inverted: false,
+};
 
 export default Slider;

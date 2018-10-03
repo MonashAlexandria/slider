@@ -4778,7 +4778,7 @@ rc-tools@4.x:
     url-loader "^0.5.5"
     webpack "^1.7.3"
 
-rc-tooltip@^3.4.2:
+rc-tooltip@^3.6.*:
   version "3.7.3"
   resolved "https://registry.yarnpkg.com/rc-tooltip/-/rc-tooltip-3.7.3.tgz#280aec6afcaa44e8dff0480fbaff9e87fc00aecc"
   dependencies:
